@@ -15,3 +15,7 @@ class Test_Add_Variable(TestCase):
         self.c.add_variable("age", int)
         self.c.add_variable("addr", str)
 
+    def test_add_variable_with_unique_name(self):
+        self.assertEqual(self.c.variables["name"], str)
+        self.assertEqual(self.c.accepted_keys["--name"], "name")
+
