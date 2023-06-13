@@ -31,3 +31,8 @@ class Test_Add_Variable(TestCase):
         expected = {"-A": "addr", "--addr": "addr", "-a": "age", "--age": "age", "-n": "name", "--name": "name"}
         self.assertEqual(expected, self.c.accepted_keys)
 
+    def test_add_variable_without_accepting_shortform(self):
+        self.c = Crispy(accept_shortform=False)
+        self.c.add_variable("name", str)
+        self.assertDictEqual(self.c.accepted_keys, {"--name": "name"})
+
