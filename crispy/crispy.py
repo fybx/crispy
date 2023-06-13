@@ -20,3 +20,22 @@ class Crispy:
             raise ValueError("crispy: At least one form must be accepted!")
         self.accept_shortform = accept_shortform
         self.accept_longform = accept_longform
+
+    def add_variable(self, name: str, var_type: Type[str | bool | int | float]):
+        if name in self.variables:
+            raise DuplicateNameException(f"crispy: variable with name '{name}' is present! Choose something else.")
+        if self.accept_shortform:
+            short_lower = f"-{name[0].lower()}"
+            short_upper = f"-{name[0].upper()}"
+            if short_lower not in self.accepted_keys:
+                self.variables[name] = var_type
+                self.accepted_keys[short_lower] = name
+            elif short_upper not in self.accepted_keys:
+                self.variables[name] = var_type
+                self.accepted_keys[short_upper] = name
+            else:
+                raise ValueError(f"crispy: cannot add variable due to unavailable shortform!'-{short_lower}' "
+                                 f"and '-{short_upper}' is reserved for other variables.")
+        if self.accept_longform:
+            self.variables[name] = var_type
+            self.accepted_keys[f"--{name}"] = name
