@@ -101,3 +101,7 @@ class Test_Parse_Arguments(TestCase):
     def test_parse_arguments_case17(self):
         with self.assertRaises(MissingValueException):
             self.c.parse_arguments(["-a=15", "--name", "-s"])
+
+    def test_parse_arguments_case18(self):
+        with self.assertRaises(MissingValueException):
+            self.c.parse_arguments(["-a", "--name", "-s"])
