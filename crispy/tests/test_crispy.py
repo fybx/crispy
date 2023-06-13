@@ -17,3 +17,8 @@ class TestCrispy(TestCase):
         c = Crispy(accept_shortform=True, accept_longform=False)
         self.assertTrue(c.accept_shortform)
         self.assertFalse(c.accept_longform)
+
+    def test_init_accepts_only_longform(self):
+        c = Crispy(accept_shortform=False, accept_longform=True)
+        self.assertFalse(c.accept_shortform)
+        self.assertTrue(c.accept_longform)
