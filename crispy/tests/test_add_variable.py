@@ -4,6 +4,7 @@
 #
 #       test_add_variable.py
 from unittest import TestCase
+
 from crispy.crispy import Crispy
 from crispy.duplicate_name_exception import DuplicateNameException
 

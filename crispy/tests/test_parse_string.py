@@ -4,6 +4,7 @@
 #
 #       test_parse_string.py
 from unittest import TestCase
+
 from crispy.crispy import Crispy
 
 

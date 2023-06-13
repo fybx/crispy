@@ -4,6 +4,7 @@
 #
 #       test_parse_arguments.py
 from unittest import TestCase
+
 from crispy.crispy import Crispy
 from crispy.missing_value_exception import MissingValueException
 from crispy.unexpected_argument_exception import UnexpectedArgumentException
