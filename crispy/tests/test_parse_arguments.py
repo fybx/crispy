@@ -20,3 +20,7 @@ class Test_Parse_Arguments(TestCase):
         expected = {"name": "foo", "sex": False}
         actual = self.c.parse_arguments(["-n=foo"])
         self.assertEqual(expected, actual)
+
+    def test_parse_arguments_case2(self):
+        with self.assertRaises(UnexpectedArgumentException):
+            self.c.parse_arguments(["--bool", "True"])
