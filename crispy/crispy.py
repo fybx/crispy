@@ -39,3 +39,16 @@ class Crispy:
         if self.accept_longform:
             self.variables[name] = var_type
             self.accepted_keys[f"--{name}"] = name
+
+    def show_keys(self) -> str:
+        keys: List[str] = list(self.accepted_keys.keys())
+        twice = self.accept_shortform and self.accept_longform
+        i = 0
+        text = ""
+        move = 2 if twice else 1
+
+        while i < len(keys):
+            name = self.accepted_keys[keys[i]]
+            text += f"{keys[i]}, {keys[i + 1]}: {name}\n" if twice else f"{keys[i]}: {name}\n"
+            i += move
+        return text
