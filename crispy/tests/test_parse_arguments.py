@@ -24,3 +24,12 @@ class Test_Parse_Arguments(TestCase):
     def test_parse_arguments_case2(self):
         with self.assertRaises(UnexpectedArgumentException):
             self.c.parse_arguments(["--bool", "True"])
+
+    def test_parse_arguments_case3(self):
+        self.c = Crispy()
+        self.c.add_variable("flag", bool)
+        expected = {"flag": True}
+        actual = self.c.parse_arguments(["--flag"])
+        self.assertEqual(expected, actual)
+        actual = self.c.parse_arguments(["-f"])
+        self.assertEqual(expected, actual)
