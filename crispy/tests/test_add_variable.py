@@ -27,3 +27,7 @@ class Test_Add_Variable(TestCase):
         self.assertEqual(self.c.variables["name"], str)
         self.assertEqual(self.c.accepted_keys["-n"], "name")
 
+    def test_add_variable_with_duplicate_shortform(self):
+        expected = {"-A": "addr", "--addr": "addr", "-a": "age", "--age": "age", "-n": "name", "--name": "name"}
+        self.assertEqual(expected, self.c.accepted_keys)
+
