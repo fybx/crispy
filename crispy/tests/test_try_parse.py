@@ -17,3 +17,8 @@ class Test_Try_Parse(TestCase):
         expected = True
         actual = Crispy.try_parse("true", bool)
         self.assertEqual(expected, actual)
+
+    def test_try_parse_case3(self):
+        expected = False
+        actual = Crispy.try_parse("false", bool)
+        self.assertEqual(expected, actual)
