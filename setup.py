@@ -1,7 +1,7 @@
 from distutils.core import setup
 
 setup(
-    name='crispy',
+    name='crispy-parser',
     version='1.0.0',
     packages=['crispy', 'crispy.tests'],
     url='https://github.com/fybx/crispy',
