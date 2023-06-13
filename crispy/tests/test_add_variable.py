@@ -19,3 +19,7 @@ class Test_Add_Variable(TestCase):
         self.assertEqual(self.c.variables["name"], str)
         self.assertEqual(self.c.accepted_keys["--name"], "name")
 
+    def test_add_variable_with_duplicate_name(self):
+        with self.assertRaises(DuplicateNameException):
+            self.c.add_variable("name", str)
+
