@@ -36,3 +36,7 @@ class Test_Add_Variable(TestCase):
         self.c.add_variable("name", str)
         self.assertDictEqual(self.c.accepted_keys, {"--name": "name"})
 
+    def test_add_variable_without_accepting_longform(self):
+        self.c = Crispy(accept_longform=False)
+        self.c.add_variable("name", str)
+        self.assertDictEqual(self.c.accepted_keys, {"-n": "name"})
