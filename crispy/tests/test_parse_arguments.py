@@ -53,3 +53,8 @@ class Test_Parse_Arguments(TestCase):
         expected = {"sex": False, "name": "John"}
         actual = self.c.parse_arguments(["--sex=False", "--name=John"])
         self.assertEqual(expected, actual)
+
+    def test_parse_arguments_case8(self):
+        expected = {"sex": True, "name": "John", "age": 15}
+        actual = self.c.parse_arguments(["-n=John", "-s=True", "--age=15"])
+        self.assertEqual(expected, actual)
