@@ -21,3 +21,10 @@ class Test_Show_Keys(TestCase):
         expected = "--name: name\n"
         actual = c.show_keys()
         self.assertEqual(expected, actual)
+
+    def test_show_keys_case3(self):
+        c = Crispy(accept_longform=False)
+        c.add_variable("name", str)
+        expected = "-n: name\n"
+        actual = c.show_keys()
+        self.assertEqual(expected, actual)
