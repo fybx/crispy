@@ -1,0 +1,28 @@
+[MESSAGES CONTROL]
+# Enable or disable specific types of messages
+disable = C0111, C0114, C0115, C0116, E0401, E1101, W0611
+
+[MASTER]
+# Specify the maximum allowed code complexity
+max-line-length = 150
+max-complexity = 10
+
+[TYPECHECK]
+# Enable strict type checking
+generated-members = typing.*, TYPE_CHECKING
+
+[REPORTS]
+# Enable error, warning, and convention reports
+reports = yes
+
+[SIMILARITIES]
+# Disable similarity checks
+
+[FORMAT]
+# Set the code formatting options
+indent-string = "    "
+indent-after-paren = 4
+
+[PYLINTMESSAGES]
+# Enable pylint messages
+enable = pylint
