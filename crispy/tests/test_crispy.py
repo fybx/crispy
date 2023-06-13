@@ -22,3 +22,7 @@ class TestCrispy(TestCase):
         c = Crispy(accept_shortform=False, accept_longform=True)
         self.assertFalse(c.accept_shortform)
         self.assertTrue(c.accept_longform)
+
+    def test_init_raises_error_without_acceptance(self):
+        with self.assertRaises(ValueError):
+            Crispy(accept_shortform=False, accept_longform=False)
