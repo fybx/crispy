@@ -1,0 +1,14 @@
+#
+#       Ferit Yiğit BALABAN,    <fybalaban@fybx.dev>
+#       crispy                  2023
+#
+#       test_try_parse.py
+from unittest import TestCase
+from crispy.crispy import Crispy
+
+
+class Test_Try_Parse(TestCase):
+    def test_try_parse_case1(self):
+        expected = "string"
+        actual = Crispy.try_parse("string", str)
+        self.assertEqual(expected, actual)
