@@ -52,3 +52,43 @@ class Crispy:
             text += f"{keys[i]}, {keys[i + 1]}: {name}\n" if twice else f"{keys[i]}: {name}\n"
             i += move
         return text
+
+    def parse_arguments(self, args: List[str]) -> Dict[str, str]:
+        if not args:
+            raise NoArgumentsException("crispy: no argument was given!")
+
+        result = {}
+        i, len_args = 0, len(args)
+        while i < len_args:
+            key = args[i]
+
+            if key.strip() == "":
+                i += 1
+                continue
+
+            if "=" not in key:
+                if (i + 1 < len_args) and (args[i + 1] not in self.accepted_keys) and ("=" not in args[i + 1]):
+                    value = args[i + 1]
+                    i += 2
+                else:
+                    expected_type = self.variables.get(self.accepted_keys.get(key))
+                    if expected_type == bool:
+                        value = "True"
+                        i += 1
+                    else:
+                        raise MissingValueException(f"crispy: missing value for variable '{self.accepted_keys[key]}'!")
+            else:
+                key, value = key.split("=", 1)
+                i += 1
+
+            accepted_key = self.accepted_keys.get(key)
+            if accepted_key:
+                result[accepted_key] = self.try_parse(value, self.variables.get(accepted_key))
+            else:
+                raise UnexpectedArgumentException(f"crispy: unexpected argument: '{key}'")
+
+        for key, value in self.variables.items():
+            if value == bool and key not in result:
+                result[key] = False
+
+        return result
