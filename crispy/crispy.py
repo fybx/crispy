@@ -96,3 +96,16 @@ class Crispy:
     def parse_string(self, string: str, seperator=" ") -> dict:
         tokens: List[str] = str.split(string, seperator)
         return self.parse_arguments(tokens)
+
+    @staticmethod
+    def try_parse(value: str, expected_type: type) -> str | bool | int | float:
+        if expected_type == bool:
+            if value.lower() == "true":
+                return True
+            if value.lower() == "false":
+                return False
+        if expected_type == int:
+            return int(value)
+        if expected_type == float:
+            return float(value)
+        return value
