@@ -92,3 +92,7 @@ class Crispy:
                 result[key] = False
 
         return result
+
+    def parse_string(self, string: str, seperator=" ") -> dict:
+        tokens: List[str] = str.split(string, seperator)
+        return self.parse_arguments(tokens)
