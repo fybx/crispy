@@ -1,4 +1,9 @@
 # JetBrains IDEs
 .idea/
 
+# Python
 __pycache__/
+build/
+dist/
+crispy_parser.egg-info/
+
