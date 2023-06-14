@@ -1,4 +1,4 @@
-## crispy
+## crispy [![Test crispy](https://github.com/fybx/crispy/actions/workflows/flow-test_crispy.yml/badge.svg?branch=main)](https://github.com/fybx/crispy/actions/workflows/flow-test_crispy.yml) [![Upload Python Package](https://github.com/fybx/crispy/actions/workflows/flow-publish_package.yml/badge.svg?branch=main)](https://github.com/fybx/crispy/actions/workflows/flow-publish_package.yml)
 
 `crispy` is my take on parsing command-line arguments. It is a dead simple tool that allows you to define your own keys for systematically gathering variables.
 
@@ -45,7 +45,7 @@ print(result)
 
 > {'name': 'John', 'age': 21, 'salary': 30000.45}
 
-or parse `sys.argv`:
+Or parse `sys.argv`:
 
 ```python
 arguments = c.parse_arguments(sys.argv[1:])
@@ -58,7 +58,7 @@ print(arguments)
 
 I welcome contributions to enhance and improve this library! Whether you want to fix a bug, add a new feature, or suggest an improvement, your contributions are highly appreciated.
 
-Please note that by contributing to this project, you agree to license your contributions under the same license governing this library. If you're unsure or have any questions about the contribution process, feel free to reach out to me by opening an issue.
+Just so you know, by contributing to this project, you agree to license your contributions under the same license governing this library. If you're unsure or have questions about the contribution process, please get in touch with me by opening an issue.
 
 ## Credits
 
