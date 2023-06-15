@@ -125,6 +125,12 @@ class Crispy:
 
     @staticmethod
     def try_parse(value: str, expected_type: type) -> str | bool | int | float:
+        """
+        Trys to convert a value in a string object to the target type.
+        :param value: Value in string type
+        :param expected_type: Target type
+        :return: Returns the value in target type
+        """
         if expected_type == bool:
             if value.lower() == "true":
                 return True
