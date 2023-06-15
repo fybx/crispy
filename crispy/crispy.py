@@ -5,14 +5,19 @@
 #       crispy.py
 from typing import List, Dict, Type
 
-from crispy.duplicate_name_exception import DuplicateNameException
-from crispy.missing_value_exception import MissingValueException
-from crispy.no_arguments_exception import NoArgumentsException
-from crispy.unexpected_argument_exception import UnexpectedArgumentException
+from duplicate_name_exception import DuplicateNameException
+from missing_value_exception import MissingValueException
+from no_arguments_exception import NoArgumentsException
+from unexpected_argument_exception import UnexpectedArgumentException
 
 
 class Crispy:
     def __init__(self, accept_shortform=True, accept_longform=True):
+        """
+        Initializes a Crispy class with the default rules of accepting both short and long form of arguments.
+        :param accept_shortform: Sets whether to allow short form of arguments (e.g., -a, -e, -A, -E)
+        :param accept_longform: Sets whether to allow long form of arguments (e.g., --argument, --example)
+        """
         self.accepted_keys: Dict[str, str] = {}
         self.variables: Dict[str, Type[str | bool | int | float]] = {}
 
@@ -22,6 +27,12 @@ class Crispy:
         self.accept_longform = accept_longform
 
     def add_variable(self, name: str, var_type: Type[str | bool | int | float]):
+        """
+        Adds a variable to the parser.
+        :param name: Name of the variable
+        :param var_type: Type of the variable
+        :return: None
+        """
         if name in self.variables:
             raise DuplicateNameException(f"crispy: variable with name '{name}' is present! Choose something else.")
         if self.accept_shortform:
@@ -41,6 +52,10 @@ class Crispy:
             self.accepted_keys[f"--{name}"] = name
 
     def show_keys(self) -> str:
+        """
+        Creates a string showing and listing accepted forms of arguments
+        :return: Returns the string of the assembled message
+        """
         keys: List[str] = list(self.accepted_keys.keys())
         twice = self.accept_shortform and self.accept_longform
         i = 0
@@ -54,6 +69,11 @@ class Crispy:
         return text
 
     def parse_arguments(self, args: List[str]) -> Dict[str, str]:
+        """
+        Parses a list of arguments to a dictionary of variables and values.
+        :param args: List of the arguments, containing each token as a list element
+        :return: Returns the dictionary object of parsed variable with the value
+        """
         if not args:
             raise NoArgumentsException("crispy: no argument was given!")
 
@@ -94,11 +114,23 @@ class Crispy:
         return result
 
     def parse_string(self, string: str, seperator=" ") -> dict:
+        """
+        Splits a string into a list of tokens, and parses the token list.
+        :param string: String of the text to be parsed
+        :param seperator: Seperator character to tokenize the input string
+        :return: Returns the dictionary of parsed variables and values
+        """
         tokens: List[str] = str.split(string, seperator)
         return self.parse_arguments(tokens)
 
     @staticmethod
     def try_parse(value: str, expected_type: type) -> str | bool | int | float:
+        """
+        Trys to convert a value in a string object to the target type.
+        :param value: Value in string type
+        :param expected_type: Target type
+        :return: Returns the value in target type
+        """
         if expected_type == bool:
             if value.lower() == "true":
                 return True
