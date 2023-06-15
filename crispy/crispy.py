@@ -13,6 +13,11 @@ from unexpected_argument_exception import UnexpectedArgumentException
 
 class Crispy:
     def __init__(self, accept_shortform=True, accept_longform=True):
+        """
+        Initializes a Crispy class with the default rules of accepting both short and long form of arguments.
+        :param accept_shortform: Sets whether to allow short form of arguments (e.g., -a, -e, -A, -E)
+        :param accept_longform: Sets whether to allow long form of arguments (e.g., --argument, --example)
+        """
         self.accepted_keys: Dict[str, str] = {}
         self.variables: Dict[str, Type[str | bool | int | float]] = {}
 
