@@ -27,6 +27,12 @@ class Crispy:
         self.accept_longform = accept_longform
 
     def add_variable(self, name: str, var_type: Type[str | bool | int | float]):
+        """
+        Adds a variable to the parser.
+        :param name: Name of the variable
+        :param var_type: Type of the variable
+        :return: None
+        """
         if name in self.variables:
             raise DuplicateNameException(f"crispy: variable with name '{name}' is present! Choose something else.")
         if self.accept_shortform:
