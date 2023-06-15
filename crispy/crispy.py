@@ -69,6 +69,11 @@ class Crispy:
         return text
 
     def parse_arguments(self, args: List[str]) -> Dict[str, str]:
+        """
+        Parses a list of arguments to a dictionary of variables and values.
+        :param args: List of the arguments, containing each token as a list element
+        :return: Returns the dictionary object of parsed variable with the value
+        """
         if not args:
             raise NoArgumentsException("crispy: no argument was given!")
 
