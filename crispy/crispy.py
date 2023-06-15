@@ -5,10 +5,10 @@
 #       crispy.py
 from typing import List, Dict, Type
 
-from crispy.duplicate_name_exception import DuplicateNameException
-from crispy.missing_value_exception import MissingValueException
-from crispy.no_arguments_exception import NoArgumentsException
-from crispy.unexpected_argument_exception import UnexpectedArgumentException
+from duplicate_name_exception import DuplicateNameException
+from missing_value_exception import MissingValueException
+from no_arguments_exception import NoArgumentsException
+from unexpected_argument_exception import UnexpectedArgumentException
 
 
 class Crispy:
