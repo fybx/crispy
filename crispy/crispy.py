@@ -3,7 +3,7 @@
 #       crispy                  2023
 #
 #       crispy.py
-from typing import List, Dict, Type
+from typing import List, Dict, Type, Union
 
 from duplicate_name_exception import DuplicateNameException
 from missing_value_exception import MissingValueException
@@ -19,14 +19,14 @@ class Crispy:
         :param accept_longform: Sets whether to allow long form of arguments (e.g., --argument, --example)
         """
         self.accepted_keys: Dict[str, str] = {}
-        self.variables: Dict[str, Type[str | bool | int | float]] = {}
+        self.variables: Dict[str, Type[Union[str, bool, int, float]]] = {}
 
         if not (accept_shortform or accept_longform):
             raise ValueError("crispy: At least one form must be accepted!")
         self.accept_shortform = accept_shortform
         self.accept_longform = accept_longform
 
-    def add_variable(self, name: str, var_type: Type[str | bool | int | float]):
+    def add_variable(self, name: str, var_type: Type[Union[str, bool, int, float]]):
         """
         Adds a variable to the parser.
         :param name: Name of the variable
@@ -124,7 +124,7 @@ class Crispy:
         return self.parse_arguments(tokens)
 
     @staticmethod
-    def try_parse(value: str, expected_type: type) -> str | bool | int | float:
+    def try_parse(value: str, expected_type: type) -> Union[str, bool, int, float]:
         """
         Trys to convert a value in a string object to the target type.
         :param value: Value in string type
