@@ -68,7 +68,7 @@ class Crispy:
             i += move
         return text
 
-    def parse_arguments(self, args: List[str]) -> Dict[str, str]:
+    def parse_arguments(self, args: List[str]) -> Dict[str, Union[str, bool, int, float]]:
         """
         Parses a list of arguments to a dictionary of variables and values.
         :param args: List of the arguments, containing each token as a list element
@@ -77,7 +77,7 @@ class Crispy:
         if not args:
             raise NoArgumentsException("crispy: no argument was given!")
 
-        result = {}
+        result: Dict[str, Union[str, bool, int, float]] = {}
         i, len_args = 0, len(args)
         while i < len_args:
             key = args[i]
@@ -113,7 +113,7 @@ class Crispy:
 
         return result
 
-    def parse_string(self, string: str, seperator=" ") -> dict:
+    def parse_string(self, string: str, seperator=" ") -> Dict[str, Union[str, bool, int, float]]:
         """
         Splits a string into a list of tokens, and parses the token list.
         :param string: String of the text to be parsed
