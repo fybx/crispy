@@ -15,5 +15,5 @@ setup(
     description='Crispy is a simple command line argument parser, ready to be integrated to any project of any size!',
     long_description=readme,
     long_description_content_type='text/markdown',
-    python_requires=">=3.10"
+    python_requires=">=3.7"
 )
