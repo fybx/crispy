@@ -52,6 +52,10 @@ class Crispy:
             self.accepted_keys[f"--{name}"] = name
 
     def show_keys(self) -> str:
+        """
+        Creates a string showing and listing accepted forms of arguments
+        :return: Returns the string of the assembled message
+        """
         keys: List[str] = list(self.accepted_keys.keys())
         twice = self.accept_shortform and self.accept_longform
         i = 0
