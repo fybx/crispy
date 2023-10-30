@@ -73,6 +73,6 @@ Ferit Yiğit BALABAN, <fybalaban@fybx.dev>
 [0]: https://pypi.org/project/crispy-parser/
 [1]: https://github.com/fybx/crispy/releases/tag/v1.0.0
 [2]: https://fybx.dev
-[3]: https://twitter.com/
+[3]: https://twitter.com/fybalaban
 [4]: https://www.linkedin.com/in/fybx
 [5]: https://bento.me/balaban
