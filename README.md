@@ -10,7 +10,7 @@ In just 5 simple steps, you can start parsing any complicated user input into a 
 |-------------------------------------------------------------|---------|-------------|
 | String, integer, float, and boolean type arguments          | ✅      | [v1.0.0][1] |
 | Custom exceptions for tracking user errors in input         | ✅      | [v1.0.0][1] |
-| Custom subcommands                                          | ✅      | [v2.0.0][]  |
+| Custom subcommands                                          | ✅      | [v2.0.0][2]  |
 | Treating quoted strings as single input in `parse_string()` | TO DO   | ...         |
 
 ### Usage
