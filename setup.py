@@ -7,7 +7,7 @@ with open('README.md', 'r', encoding='utf-8') as f:
 setup(
     name='crispy-parser',
     version='2.0.0',
-    packages=['crispy', 'crispy.tests'],
+    packages=['crispy'],
     url='https://github.com/fybx/crispy',
     license='GNU LGPL-v2.1',
     author='F. Y. BALABAN, <fyb@fybx.dev>',
