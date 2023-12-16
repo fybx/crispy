@@ -2,13 +2,13 @@
 #       Ferit Yiğit BALABAN,    <fybalaban@fybx.dev>
 #       crispy                  2023
 #
-#       crispy.py
-from typing import List, Dict, Type, Union
+from typing import List, Dict, Type, Union, Tuple
 
 from crispy.duplicate_name_exception import DuplicateNameException
 from crispy.missing_value_exception import MissingValueException
 from crispy.no_arguments_exception import NoArgumentsException
 from crispy.unexpected_argument_exception import UnexpectedArgumentException
+from crispy.too_many_subcommands_exception import TooManySubcommandsException
 
 
 class Crispy:
@@ -80,7 +80,7 @@ class Crispy:
             i += move
         return text
 
-    def parse_arguments(self, args: List[str]) -> Dict[str, Union[str, bool, int, float]]:
+    def parse_arguments(self, args: List[str]) -> Tuple[str, Dict[str, Union[str, bool, int, float]]]:
         """
         Parses a list of arguments to a dictionary of variables and values.
         :param args: List of the arguments, containing each token as a list element
@@ -89,7 +89,8 @@ class Crispy:
         if not args:
             raise NoArgumentsException("crispy: no argument was given!")
 
-        result: Dict[str, Union[str, bool, int, float]] = {}
+        subcommand: str = None
+        keys: Dict[str, Union[str, bool, int, float]] = {}
         i, len_args = 0, len(args)
         while i < len_args:
             key = args[i]
@@ -98,7 +99,13 @@ class Crispy:
                 i += 1
                 continue
 
-            if "=" not in key:
+            if not key.startswith("-"):
+                if subcommand:
+                    raise TooManySubcommandsException(f"crispy: too many subcommands! '{key}' is unexpected!")
+                subcommand = key
+                i += 1
+                continue
+            elif "=" not in key:
                 if (i + 1 < len_args) and (args[i + 1] not in self.accepted_keys) and ("=" not in args[i + 1]):
                     value = args[i + 1]
                     i += 2
@@ -115,15 +122,15 @@ class Crispy:
 
             accepted_key = self.accepted_keys.get(key)
             if accepted_key:
-                result[accepted_key] = self.try_parse(value, self.variables.get(accepted_key))
+                keys[accepted_key] = self.try_parse(value, self.variables.get(accepted_key))
             else:
                 raise UnexpectedArgumentException(f"crispy: unexpected argument: '{key}'")
 
         for key, value in self.variables.items():
-            if value == bool and key not in result:
-                result[key] = False
+            if value == bool and key not in keys:
+                keys[key] = False
 
-        return result
+        return (subcommand, keys)
 
     def parse_string(self, string: str, seperator=" ") -> Dict[str, Union[str, bool, int, float]]:
         """
