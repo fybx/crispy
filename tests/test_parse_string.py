@@ -16,4 +16,4 @@ class Test_Parse_String(TestCase):
         c.add_variable("sex", bool)
         expected = {"sex": True, "name": "John", "age": 14}
         actual = c.parse_string("-s -n=John -a 14")
-        self.assertEqual(expected, actual)
+        self.assertEqual(expected, actual[1])
