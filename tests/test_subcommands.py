@@ -35,7 +35,7 @@ class Test_Subcommands(TestCase):
         self.assertEqual(self.c.subcommands['test'], 'description of subcommand test')
 
     def test_add_duplicate_subcommand(self):
-        with self.assertRaises(DuplicateNameException()):
+        with self.assertRaises(DuplicateNameException):
             self.c.add_subcommand('add', 'the description can change')
 
     def test_parse_subcommand_from_list(self):
