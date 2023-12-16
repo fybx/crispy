@@ -148,14 +148,15 @@ class Crispy:
 
         return (subcommand, keys)
 
-    def parse_string(self, string: str, seperator=" ") -> Dict[str, Union[str, bool, int, float]]:
+    def parse_string(self, string: str, seperator=" ") -> Tuple[str, Dict[str, Union[str, bool, int, float]]]:
         """
         Splits a string into a list of tokens, and parses the token list.
         :param string: String of the text to be parsed
         :param seperator: Seperator character to tokenize the input string
         :return: Returns the dictionary of parsed variables and values
         """
-        tokens: List[str] = str.split(string, seperator)
+        string = string.strip()
+        tokens = string.split(seperator)
         return self.parse_arguments(tokens)
 
     @staticmethod
