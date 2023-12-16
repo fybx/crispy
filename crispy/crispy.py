@@ -105,7 +105,7 @@ class Crispy:
         if not args:
             raise NoArgumentsException("crispy: no argument was given!")
 
-        subcommand: str = None
+        subcommand: str = ""
         keys: Dict[str, Union[str, bool, int, float]] = {}
         i, len_args = 0, len(args)
         while i < len_args:
@@ -116,7 +116,7 @@ class Crispy:
                 continue
 
             if not key.startswith("-"):
-                if subcommand:
+                if subcommand != "":
                     raise TooManySubcommandsException(f"crispy: too many subcommands! '{key}' is unexpected!")
                 subcommand = key
                 i += 1
