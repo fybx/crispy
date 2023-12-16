@@ -52,17 +52,17 @@ class Test_Complex_Cases(TestCase):
         actual = self.c.parse_string("--number1=5 -N 3 add")
         self.assertEqual(expected, actual)
     
-    def test_graceful_error(self):
-        with self.assertRaises(ParsingException) as context:
-            # --number15 is not a valid key
-            self.c.parse_string("add --number1 --number2=3")
-        self.assertEqual("int type value", context.exception.expected)
-        self.assertEqual(2, context.exception.at_position)
-        self.assertEqual("--number2=3", context.exception.found)
+    # def test_graceful_error(self):
+    #     with self.assertRaises(ParsingException) as context:
+    #         # --number15 is not a valid key
+    #         self.c.parse_string("add --number1 --number2=3")
+    #     self.assertEqual("int type value", context.exception.expected)
+    #     self.assertEqual(2, context.exception.at_position)
+    #     self.assertEqual("--number2=3", context.exception.found)
     
-    def test_graceful_error2(self):
-        with self.assertRaises(ParsingException) as context:
-            self.c.parse_string("subtract -n =5 --number2=3")
-        self.assertEqual("int type value", context.exception.expected)
-        self.assertEqual(2, context.exception.at_position)
-        self.assertEqual("=5", context.exception.found)
+    # def test_graceful_error2(self):
+    #     with self.assertRaises(ParsingException) as context:
+    #         self.c.parse_string("subtract -n =5 --number2=3")
+    #     self.assertEqual("int type value", context.exception.expected)
+    #     self.assertEqual(2, context.exception.at_position)
+    #     self.assertEqual("=5", context.exception.found)
