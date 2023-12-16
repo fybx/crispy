@@ -1,8 +1,23 @@
 #
-#       Ferit Yiğit BALABAN,    <fybalaban@fybx.dev>
-#       crispy                  2023
+#   This file is part of the crispy-parser library.
+#   Copyright (C) 2023  Ferit Yiğit BALABAN
 #
-#       test_parse_string.py
+#   This library is free software; you can redistribute it and/or
+#   modify it under the terms of the GNU Lesser General Public
+#   License as published by the Free Software Foundation; either
+#   version 2.1 of the License, or (at your option) any later version.
+#   
+#   This library is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#   Lesser General Public License for more details.
+#   
+#   You should have received a copy of the GNU Lesser General Public
+#   License along with this library; if not, write to the Free Software
+#   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+#   USA.
+
+
 from unittest import TestCase
 
 from crispy.crispy import Crispy
@@ -16,4 +31,4 @@ class Test_Parse_String(TestCase):
         c.add_variable("sex", bool)
         expected = {"sex": True, "name": "John", "age": 14}
         actual = c.parse_string("-s -n=John -a 14")
-        self.assertEqual(expected, actual)
+        self.assertEqual(expected, actual[1])

@@ -1,14 +1,30 @@
 #
-#       Ferit Yiğit BALABAN,    <fybalaban@fybx.dev>
-#       crispy                  2023
+#   This file is part of the crispy-parser library.
+#   Copyright (C) 2023  Ferit Yiğit BALABAN
 #
-#       crispy.py
-from typing import List, Dict, Type, Union
+#   This library is free software; you can redistribute it and/or
+#   modify it under the terms of the GNU Lesser General Public
+#   License as published by the Free Software Foundation; either
+#   version 2.1 of the License, or (at your option) any later version.
+#   
+#   This library is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#   Lesser General Public License for more details.
+#   
+#   You should have received a copy of the GNU Lesser General Public
+#   License along with this library; if not, write to the Free Software
+#   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+#   USA.
+
+
+from typing import List, Dict, Type, Union, Tuple
 
 from crispy.duplicate_name_exception import DuplicateNameException
 from crispy.missing_value_exception import MissingValueException
 from crispy.no_arguments_exception import NoArgumentsException
 from crispy.unexpected_argument_exception import UnexpectedArgumentException
+from crispy.too_many_subcommands_exception import TooManySubcommandsException
 
 
 class Crispy:
@@ -20,11 +36,23 @@ class Crispy:
         """
         self.accepted_keys: Dict[str, str] = {}
         self.variables: Dict[str, Type[Union[str, bool, int, float]]] = {}
+        self.subcommands: Dict[str, str] = {}
 
         if not (accept_shortform or accept_longform):
             raise ValueError("crispy: At least one form must be accepted!")
         self.accept_shortform = accept_shortform
         self.accept_longform = accept_longform
+
+    def add_subcommand(self, name: str, description: str):
+        """Adds a subcommand to the parser.
+
+        :param name: Name of the subcommand
+        :param description: Description of the subcommand
+        :return: None
+        """
+        if name in self.subcommands:
+            raise DuplicateNameException(f"crispy: subcommand with name '{name}' is present! Choose something else.")
+        self.subcommands[name] = description
 
     def add_variable(self, name: str, var_type: Type[Union[str, bool, int, float]]):
         """
@@ -68,7 +96,7 @@ class Crispy:
             i += move
         return text
 
-    def parse_arguments(self, args: List[str]) -> Dict[str, Union[str, bool, int, float]]:
+    def parse_arguments(self, args: List[str]) -> Tuple[str, Dict[str, Union[str, bool, int, float]]]:
         """
         Parses a list of arguments to a dictionary of variables and values.
         :param args: List of the arguments, containing each token as a list element
@@ -77,7 +105,8 @@ class Crispy:
         if not args:
             raise NoArgumentsException("crispy: no argument was given!")
 
-        result: Dict[str, Union[str, bool, int, float]] = {}
+        subcommand: str = None
+        keys: Dict[str, Union[str, bool, int, float]] = {}
         i, len_args = 0, len(args)
         while i < len_args:
             key = args[i]
@@ -86,7 +115,13 @@ class Crispy:
                 i += 1
                 continue
 
-            if "=" not in key:
+            if not key.startswith("-"):
+                if subcommand:
+                    raise TooManySubcommandsException(f"crispy: too many subcommands! '{key}' is unexpected!")
+                subcommand = key
+                i += 1
+                continue
+            elif "=" not in key:
                 if (i + 1 < len_args) and (args[i + 1] not in self.accepted_keys) and ("=" not in args[i + 1]):
                     value = args[i + 1]
                     i += 2
@@ -103,15 +138,15 @@ class Crispy:
 
             accepted_key = self.accepted_keys.get(key)
             if accepted_key:
-                result[accepted_key] = self.try_parse(value, self.variables.get(accepted_key))
+                keys[accepted_key] = self.try_parse(value, self.variables.get(accepted_key))
             else:
                 raise UnexpectedArgumentException(f"crispy: unexpected argument: '{key}'")
 
         for key, value in self.variables.items():
-            if value == bool and key not in result:
-                result[key] = False
+            if value == bool and key not in keys:
+                keys[key] = False
 
-        return result
+        return (subcommand, keys)
 
     def parse_string(self, string: str, seperator=" ") -> Dict[str, Union[str, bool, int, float]]:
         """

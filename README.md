@@ -6,12 +6,12 @@ In just 5 simple steps, you can start parsing any complicated user input into a 
 
 ### Capabilities
 
-| Feature                                                     | Exists | Version     |
-|-------------------------------------------------------------|--------|-------------|
+| Feature                                                     | Support | Version     |
+|-------------------------------------------------------------|---------|-------------|
 | String, integer, float, and boolean type arguments          | ✅      | [v1.0.0][1] |
 | Custom exceptions for tracking user errors in input         | ✅      | [v1.0.0][1] |
-| Treating quoted strings as single input in `parse_string()` | TO DO  | ...         |
-| Custom subcommands                                          | TO DO  | ...         |
+| Custom subcommands                                          | ✅      | [v2.0.0][]  |
+| Treating quoted strings as single input in `parse_string()` | TO DO   | ...         |
 
 ### Usage
 
@@ -64,15 +64,17 @@ Just so you know, by contributing to this project, you agree to license your con
 
 Feel free to contact me for collaboration on anything!
 
-Ferit Yiğit BALABAN, <fybalaban@fybx.dev>
+Ferit Yiğit BALABAN, <[fyb@fybx.dev][llmail]>
 
-[My Website][2] | [Bento][5] | [Twitter][3] | [LinkedIn][4]
+[My Website][llwebsite] • [My Bento][llbento] • [X][llx] • [LinkedIn][lllinkedin]
 
 2023
 
 [0]: https://pypi.org/project/crispy-parser/
 [1]: https://github.com/fybx/crispy/releases/tag/v1.0.0
-[2]: https://fybx.dev
-[3]: https://twitter.com/fybalaban
-[4]: https://www.linkedin.com/in/fybx
-[5]: https://bento.me/balaban
+[2]: https://github.com/fybx/crispy/releases/tag/v2.0.0
+[llmail]: mailto:fyb@fybx.dev
+[llwebsite]: https://fybx.dev
+[llbento]: https://bento.me/balaban
+[llx]: https://x.com/fybalaban
+[lllinkedin]: https://linkedin.com/in/fybx
