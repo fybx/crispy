@@ -20,11 +20,23 @@ class Crispy:
         """
         self.accepted_keys: Dict[str, str] = {}
         self.variables: Dict[str, Type[Union[str, bool, int, float]]] = {}
+        self.subcommands: Dict[str, str] = {}
 
         if not (accept_shortform or accept_longform):
             raise ValueError("crispy: At least one form must be accepted!")
         self.accept_shortform = accept_shortform
         self.accept_longform = accept_longform
+
+    def add_subcommand(self, name: str, description: str):
+        """Adds a subcommand to the parser.
+
+        :param name: Name of the subcommand
+        :param description: Description of the subcommand
+        :return: None
+        """
+        if name in self.subcommands:
+            raise DuplicateNameException(f"crispy: subcommand with name '{name}' is present! Choose something else.")
+        self.subcommands[name] = description
 
     def add_variable(self, name: str, var_type: Type[Union[str, bool, int, float]]):
         """
