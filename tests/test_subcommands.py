@@ -50,7 +50,7 @@ class Test_Subcommands(TestCase):
 
     def test_parse_none(self):
         actual = self.c.parse_string('-a=5 -b=10')
-        self.assertEqual(actual[0], None)
+        self.assertEqual(actual[0], '')
         self.assertDictEqual(actual[1], {'a': 5, 'b': 10})
 
     def test_deny_many_subcommands(self):
