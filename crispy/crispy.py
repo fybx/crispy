@@ -199,3 +199,18 @@ class Crispy:
         if expected_type == float:
             return float(value)
         return value
+
+    @staticmethod
+    def deduce_type(value: str):
+        """
+        Deduces the type of the value.
+        :param value: Value in string type
+        :return: Returns the deduced type of value in string representation
+        """
+        if value.lower() == "true" or value.lower() == "false":
+            return bool
+        if value.isdigit():
+            return int
+        if value.replace(".", "", 1).isdigit():
+            return float
+        return str
