@@ -32,8 +32,8 @@ class Test_Subcommands(TestCase):
         self.c.add_variable('b', int)
 
     def test_add_subcommand(self):
-        self.c.add_subcommand('test', 'description of subcommand test')
-        self.assertEqual(self.c.subcommands['test'], 'description of subcommand test')
+        self.c.add_subcommand('test2', 'description of subcommand test')
+        self.assertEqual(self.c.subcommands['test2'], 'description of subcommand test')
 
     def test_add_duplicate_subcommand(self):
         with self.assertRaises(DuplicateNameException):
