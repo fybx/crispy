@@ -21,17 +21,28 @@
 from unittest import TestCase
 
 from crispy.crispy import Crispy
+from crispy.parsing_exception import ParsingException
 
 
 class TestPositionalArguments(TestCase):
     def setUp(self) -> None:
-        c = Crispy()
-        c.add_positional("name", str, 0)
-        c.add_positional("age", int, 1)
+        self.c = Crispy()
+        self.c.add_positional("name", str, 0)
+        self.c.add_positional("age", int, 1)
+        self.c.add_variable("is_student", bool)
+        self.c.add_variable("height", float)
+        self.c.add_subcommand("create", "creates the user")
         return super().setUp()
 
     def test_correct_order(self):
-        pass
+        expected = (None, {
+            "name": "Ferit",
+            "age": 21,
+            "is_student": False
+        })
+        actual = self.c.parse_string("Ferit 21")
+        self.assertEqual(expected, actual)
+        
     
     def test_type_mismatch(self):
         pass
