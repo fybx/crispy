@@ -10,7 +10,8 @@ In just 5 simple steps, you can start parsing any complicated user input into a 
 |-------------------------------------------------------------|---------|-------------|
 | String, integer, float, and boolean type arguments          | ✅      | [v1.0.0][1] |
 | Custom exceptions for tracking user errors in input         | ✅      | [v1.0.0][1] |
-| Custom subcommands                                          | ✅      | [v2.0.0][2]  |
+| Custom subcommands                                          | ✅      | [v2.0.0][2] |
+| Positional arguments                                        | ✅      | [v2.1.0][3] |
 | Treating quoted strings as single input in `parse_string()` | TO DO   | ...         |
 
 ### Usage
@@ -73,6 +74,7 @@ Ferit Yiğit BALABAN, <[fyb@fybx.dev][llmail]>
 [0]: https://pypi.org/project/crispy-parser/
 [1]: https://github.com/fybx/crispy/releases/tag/v1.0.0
 [2]: https://github.com/fybx/crispy/releases/tag/v2.0.0
+[3]: https://github.com/fybx/crispy/releases/tag/v2.1.0
 [llmail]: mailto:fyb@fybx.dev
 [llwebsite]: https://fybx.dev
 [llbento]: https://bento.me/balaban
