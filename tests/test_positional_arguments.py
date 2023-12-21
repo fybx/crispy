@@ -35,7 +35,7 @@ class TestPositionalArguments(TestCase):
         return super().setUp()
 
     def test_correct_order(self):
-        expected = (None, {
+        expected = ("", {
             "name": "Ferit",
             "age": 21,
             "is_student": False
@@ -52,7 +52,7 @@ class TestPositionalArguments(TestCase):
         self.assertEqual(context.exception.found, int)
     
     def test_with_keys(self):
-        expected = (None, {
+        expected = ("", {
             "name": "Ferit",
             "age": 21,
             "is_student": True,
