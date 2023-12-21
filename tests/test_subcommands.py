@@ -27,6 +27,7 @@ class Test_Subcommands(TestCase):
     def setUp(self):
         self.c = Crispy()
         self.c.add_subcommand('add', 'adds two numbers given by keys -a and -b')
+        self.c.add_subcommand('test', 'to test toomanysubcommands exception')
         self.c.add_variable('a', int)
         self.c.add_variable('b', int)
 
