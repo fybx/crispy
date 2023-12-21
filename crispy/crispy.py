@@ -36,12 +36,29 @@ class Crispy:
         """
         self.accepted_keys: Dict[str, str] = {}
         self.variables: Dict[str, Type[Union[str, bool, int, float]]] = {}
+        self.lookup: Dict[int, str] = {}
         self.subcommands: Dict[str, str] = {}
 
         if not (accept_shortform or accept_longform):
             raise ValueError("crispy: At least one form must be accepted!")
         self.accept_shortform = accept_shortform
         self.accept_longform = accept_longform
+
+    def add_positional(self, name: str, var_type: Type[Union[str, bool, int, float]], position: int):
+        """
+        Adds a positional argument to the parser.
+        
+        :param name: Name of the positional argument
+        :param var_type: Type of the positional argument
+        :param position: Position of the positional argument
+        :return: None
+        """
+        if name in self.variables:
+            raise DuplicateNameException(f"crispy: variable with name '{name}' is present! Choose something else.")
+        if position < 0 or position in self.lookup:
+            raise ValueError(f"crispy: invalid position '{position}'!")
+        self.variables[name] = var_type
+        self.lookup[position] = name
 
     def add_subcommand(self, name: str, description: str):
         """Adds a subcommand to the parser.
