@@ -45,7 +45,11 @@ class TestPositionalArguments(TestCase):
         
     
     def test_type_mismatch(self):
-        pass
+        with self.assertRaises(ParsingException) as context:
+            self.c.parse_string("21 Ferit")
+        self.assertEqual(context.exception.expected, str)
+        self.assertEqual(context.exception.at_position, 0)
+        self.assertEqual(context.exception.found, int)
     
     def test_with_keys(self):
         pass
