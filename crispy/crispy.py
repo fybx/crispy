@@ -124,7 +124,7 @@ class Crispy:
 
         subcommand: str = ""
         keys: Dict[str, Union[str, bool, int, float]] = {}
-        i, len_args = 0, len(args)
+        i, j, len_args = 0, 0, len(args)
         while i < len_args:
             key = args[i]
 
@@ -133,12 +133,16 @@ class Crispy:
                 continue
 
             if not key.startswith("-"):
-                if i == 0:
+                if i == 0 and key in self.subcommands:
                     if subcommand != "":
                         raise TooManySubcommandsException(f"crispy: too many subcommands! '{key}' is unexpected!")
                     subcommand = key
-                    i += 1
+                else:
+                    keys[self.lookup[j]] = self.try_parse(key, self.variables[self.lookup[j]])
+                    j += 1
+                i += 1
                 continue
+                
             elif "=" not in key:
                 if (i + 1 < len_args) and (args[i + 1] not in self.accepted_keys) and ("=" not in args[i + 1]):
                     value = args[i + 1]
