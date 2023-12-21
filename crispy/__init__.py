@@ -18,6 +18,13 @@
 #   USA.
 
 
-VERSION = "2.0.0"
-__all__ = ["crispy", "duplicate_name_exception", "missing_value_exception", "no_arguments_exception",
-           "unexpected_argument_exception"]
+VERSION = "2.0.2"
+__all__ = [
+    "crispy", 
+    "duplicate_name_exception", 
+    "missing_value_exception", 
+    "no_arguments_exception", 
+    "parsing_exception", 
+    "too_many_subcommands_exception", 
+    "unexpected_argument_exception"
+]
