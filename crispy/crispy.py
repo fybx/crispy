@@ -150,6 +150,8 @@ class Crispy:
                 continue
                 
             elif "=" not in key:
+                if key not in self.accepted_keys:
+                    raise UnexpectedArgumentException(f"crispy: unexpected argument: '{key}'")
                 if ((i + 1 < len_args) and 
                     (args[i + 1] not in self.accepted_keys) and 
                     ("=" not in args[i + 1]) and
@@ -170,8 +172,6 @@ class Crispy:
             accepted_key = self.accepted_keys.get(key)
             if accepted_key:
                 keys[accepted_key] = self.try_parse(value, self.variables[accepted_key])
-            else:
-                raise UnexpectedArgumentException(f"crispy: unexpected argument: '{key}'")
 
         for key, value in self.variables.items():
             if value == bool and key not in keys:
