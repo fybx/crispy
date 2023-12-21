@@ -17,13 +17,13 @@
 #   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 #   USA.
 
-import crispy
-import duplicate_name_exception
-import missing_value_exception
-import no_arguments_exception
-import parsing_exception
-import too_many_subcommands_exception
-import unexpected_argument_exception
+from . import crispy
+from . import duplicate_name_exception
+from . import missing_value_exception
+from . import no_arguments_exception
+from . import parsing_exception
+from . import too_many_subcommands_exception
+from . import unexpected_argument_exception
 
 VERSION = "2.0.2"
 __all__ = [
