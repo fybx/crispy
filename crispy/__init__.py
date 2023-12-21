@@ -17,7 +17,21 @@
 #   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 #   USA.
 
+import crispy
+import duplicate_name_exception
+import missing_value_exception
+import no_arguments_exception
+import parsing_exception
+import too_many_subcommands_exception
+import unexpected_argument_exception
 
-VERSION = "2.0.0"
-__all__ = ["crispy", "duplicate_name_exception", "missing_value_exception", "no_arguments_exception",
-           "unexpected_argument_exception"]
+VERSION = "2.0.2"
+__all__ = [
+    "crispy", 
+    "duplicate_name_exception", 
+    "missing_value_exception", 
+    "no_arguments_exception", 
+    "parsing_exception", 
+    "too_many_subcommands_exception", 
+    "unexpected_argument_exception"
+]
