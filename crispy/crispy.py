@@ -23,6 +23,7 @@ from typing import List, Dict, Type, Union, Tuple
 from crispy.duplicate_name_exception import DuplicateNameException
 from crispy.missing_value_exception import MissingValueException
 from crispy.no_arguments_exception import NoArgumentsException
+from crispy.parsing_exception import ParsingException
 from crispy.unexpected_argument_exception import UnexpectedArgumentException
 from crispy.too_many_subcommands_exception import TooManySubcommandsException
 
@@ -36,12 +37,29 @@ class Crispy:
         """
         self.accepted_keys: Dict[str, str] = {}
         self.variables: Dict[str, Type[Union[str, bool, int, float]]] = {}
+        self.lookup: Dict[int, str] = {}
         self.subcommands: Dict[str, str] = {}
 
         if not (accept_shortform or accept_longform):
             raise ValueError("crispy: At least one form must be accepted!")
         self.accept_shortform = accept_shortform
         self.accept_longform = accept_longform
+
+    def add_positional(self, name: str, var_type: Type[Union[str, bool, int, float]], position: int):
+        """
+        Adds a positional argument to the parser.
+        
+        :param name: Name of the positional argument
+        :param var_type: Type of the positional argument
+        :param position: Position of the positional argument
+        :return: None
+        """
+        if name in self.variables:
+            raise DuplicateNameException(f"crispy: variable with name '{name}' is present! Choose something else.")
+        if position < 0 or position in self.lookup:
+            raise ValueError(f"crispy: invalid position '{position}'!")
+        self.variables[name] = var_type
+        self.lookup[position] = name
 
     def add_subcommand(self, name: str, description: str):
         """Adds a subcommand to the parser.
@@ -107,7 +125,7 @@ class Crispy:
 
         subcommand: str = ""
         keys: Dict[str, Union[str, bool, int, float]] = {}
-        i, len_args = 0, len(args)
+        i, j, len_args = 0, 0, len(args)
         while i < len_args:
             key = args[i]
 
@@ -116,17 +134,32 @@ class Crispy:
                 continue
 
             if not key.startswith("-"):
-                if subcommand != "":
-                    raise TooManySubcommandsException(f"crispy: too many subcommands! '{key}' is unexpected!")
-                subcommand = key
+                if key in self.subcommands:
+                    if subcommand != "":
+                        raise TooManySubcommandsException(f"crispy: too many subcommands! '{key}' is unexpected!")
+                    subcommand = key
+                else:
+                    name = self.lookup[j]
+                    expected_type, found_type = self.variables[name], self.deduce_type(key)
+                    if expected_type != found_type:
+                        raise ParsingException(f"crispy: type mismatch! '{key}' is not of type '{expected_type}'", expected_type, j, found_type)
+                    
+                    keys[name] = self.try_parse(key, expected_type)
+                    j += 1
                 i += 1
                 continue
+                
             elif "=" not in key:
-                if (i + 1 < len_args) and (args[i + 1] not in self.accepted_keys) and ("=" not in args[i + 1]):
+                if key not in self.accepted_keys:
+                    raise UnexpectedArgumentException(f"crispy: unexpected argument: '{key}'")
+                if ((i + 1 < len_args) and 
+                    (args[i + 1] not in self.accepted_keys) and 
+                    ("=" not in args[i + 1]) and
+                    (self.variables[self.accepted_keys[key]] != bool)):
                     value = args[i + 1]
                     i += 2
                 else:
-                    expected_type = self.variables.get(self.accepted_keys.get(key))
+                    expected_type = self.variables[self.accepted_keys[key]]
                     if expected_type == bool:
                         value = "True"
                         i += 1
@@ -138,9 +171,7 @@ class Crispy:
 
             accepted_key = self.accepted_keys.get(key)
             if accepted_key:
-                keys[accepted_key] = self.try_parse(value, self.variables.get(accepted_key))
-            else:
-                raise UnexpectedArgumentException(f"crispy: unexpected argument: '{key}'")
+                keys[accepted_key] = self.try_parse(value, self.variables[accepted_key])
 
         for key, value in self.variables.items():
             if value == bool and key not in keys:
@@ -177,3 +208,18 @@ class Crispy:
         if expected_type == float:
             return float(value)
         return value
+
+    @staticmethod
+    def deduce_type(value: str):
+        """
+        Deduces the type of the value.
+        :param value: Value in string type
+        :return: Returns the deduced type of value in string representation
+        """
+        if value.lower() == "true" or value.lower() == "false":
+            return bool
+        if value.isdigit():
+            return int
+        if value.replace(".", "", 1).isdigit():
+            return float
+        return str

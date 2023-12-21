@@ -27,12 +27,13 @@ class Test_Subcommands(TestCase):
     def setUp(self):
         self.c = Crispy()
         self.c.add_subcommand('add', 'adds two numbers given by keys -a and -b')
+        self.c.add_subcommand('test', 'to test toomanysubcommands exception')
         self.c.add_variable('a', int)
         self.c.add_variable('b', int)
 
     def test_add_subcommand(self):
-        self.c.add_subcommand('test', 'description of subcommand test')
-        self.assertEqual(self.c.subcommands['test'], 'description of subcommand test')
+        self.c.add_subcommand('test2', 'description of subcommand test')
+        self.assertEqual(self.c.subcommands['test2'], 'description of subcommand test')
 
     def test_add_duplicate_subcommand(self):
         with self.assertRaises(DuplicateNameException):

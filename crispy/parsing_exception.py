@@ -18,8 +18,11 @@
 #   USA.
 
 
+from typing import Type
+
+
 class ParsingException(Exception):
-    def __init__(self, reason: str, expected: str, at_position: int, found: str):
+    def __init__(self, reason: str, expected: Type, at_position: int, found: Type):
         super().__init__(reason)
         self.expected = expected
         self.at_position = at_position
