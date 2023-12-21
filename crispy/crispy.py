@@ -23,6 +23,7 @@ from typing import List, Dict, Type, Union, Tuple
 from crispy.duplicate_name_exception import DuplicateNameException
 from crispy.missing_value_exception import MissingValueException
 from crispy.no_arguments_exception import NoArgumentsException
+from crispy.parsing_exception import ParsingException
 from crispy.unexpected_argument_exception import UnexpectedArgumentException
 from crispy.too_many_subcommands_exception import TooManySubcommandsException
 
@@ -138,17 +139,25 @@ class Crispy:
                         raise TooManySubcommandsException(f"crispy: too many subcommands! '{key}' is unexpected!")
                     subcommand = key
                 else:
-                    keys[self.lookup[j]] = self.try_parse(key, self.variables[self.lookup[j]])
+                    name = self.lookup[j]
+                    expected_type, found_type = self.variables[name], self.deduce_type(key)
+                    if expected_type != found_type:
+                        raise ParsingException(f"crispy: type mismatch! '{key}' is not of type '{expected_type}'", expected_type, j, found_type)
+                    
+                    keys[name] = self.try_parse(key, expected_type)
                     j += 1
                 i += 1
                 continue
                 
             elif "=" not in key:
-                if (i + 1 < len_args) and (args[i + 1] not in self.accepted_keys) and ("=" not in args[i + 1]):
+                if ((i + 1 < len_args) and 
+                    (args[i + 1] not in self.accepted_keys) and 
+                    ("=" not in args[i + 1]) and
+                    (self.variables[self.accepted_keys[key]] != bool)):
                     value = args[i + 1]
                     i += 2
                 else:
-                    expected_type = self.variables.get(self.accepted_keys.get(key))
+                    expected_type = self.variables[self.accepted_keys[key]]
                     if expected_type == bool:
                         value = "True"
                         i += 1
@@ -160,7 +169,7 @@ class Crispy:
 
             accepted_key = self.accepted_keys.get(key)
             if accepted_key:
-                keys[accepted_key] = self.try_parse(value, self.variables.get(accepted_key))
+                keys[accepted_key] = self.try_parse(value, self.variables[accepted_key])
             else:
                 raise UnexpectedArgumentException(f"crispy: unexpected argument: '{key}'")
 
