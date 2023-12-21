@@ -133,10 +133,11 @@ class Crispy:
                 continue
 
             if not key.startswith("-"):
-                if subcommand != "":
-                    raise TooManySubcommandsException(f"crispy: too many subcommands! '{key}' is unexpected!")
-                subcommand = key
-                i += 1
+                if i == 0:
+                    if subcommand != "":
+                        raise TooManySubcommandsException(f"crispy: too many subcommands! '{key}' is unexpected!")
+                    subcommand = key
+                    i += 1
                 continue
             elif "=" not in key:
                 if (i + 1 < len_args) and (args[i + 1] not in self.accepted_keys) and ("=" not in args[i + 1]):
