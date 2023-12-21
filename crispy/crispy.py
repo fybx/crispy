@@ -133,7 +133,7 @@ class Crispy:
                 continue
 
             if not key.startswith("-"):
-                if i == 0 and key in self.subcommands:
+                if key in self.subcommands:
                     if subcommand != "":
                         raise TooManySubcommandsException(f"crispy: too many subcommands! '{key}' is unexpected!")
                     subcommand = key
