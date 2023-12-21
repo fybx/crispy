@@ -52,7 +52,20 @@ class TestPositionalArguments(TestCase):
         self.assertEqual(context.exception.found, int)
     
     def test_with_keys(self):
-        pass
+        expected = (None, {
+            "name": "Ferit",
+            "age": 21,
+            "is_student": True,
+            "height": 1.86
+            })
+        actual1 = self.c.parse_string("Ferit 21 --is_student --height=1.86")
+        actual2 = self.c.parse_string("--is_student --height=1.86 Ferit 21")
+        actual3 = self.c.parse_string("--height 1.86 Ferit -i 21")
+        actual4 = self.c.parse_string("-h 1.86 Ferit 21 -i")
+        self.assertEqual(expected, actual1)
+        self.assertEqual(expected, actual2)
+        self.assertEqual(expected, actual3)
+        self.assertEqual(expected, actual4)
     
     def test_with_subcommand(self):
         pass
